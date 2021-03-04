@@ -15,10 +15,20 @@ using NativeGalleryNamespace;
 public class AppManager : MonoBehaviour
 {
     public GameObject mainCamera;
+    public GameObject MAINMENU;
     //public GameObject arCamera;
     public bool ARBool = false;
     public GameObject loadingScreen;
     public GameObject gallery;
+
+
+    public bool filterAlbumsBool = false;
+    public string searchGroup; //filter by this  group name
+    public List<AlbumImageVideos> albumImageVideoList; //entire album list
+    public List<AlbumImageVideos> searchAlbumLisFiltered; //filtered album list
+
+    //public GameObject VideoImage;
+    //public List<videoImageInfo> videoImageInfoList;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     public void Update()
@@ -26,12 +36,18 @@ public class AppManager : MonoBehaviour
         if (ARBool == true)
         {
             mainCamera.SetActive(false);
+            MAINMENU.SetActive(false);
             //arCamera.SetActive(true);
         }
         else if (ARBool == false)
         {
             mainCamera.SetActive(true);
+            MAINMENU.SetActive(true);
             //arCamera.SetActive(false);
+        }
+        if (filterAlbumsBool == true)
+        {
+            FilterAlbums();
         }
     }
 
@@ -39,6 +55,25 @@ public class AppManager : MonoBehaviour
     {
         DisableAR();
         GetComponent<AppManager>().enabled = true;
+    }
+
+    public void FilterAlbums()
+    {
+        foreach (var item in albumImageVideoList)
+        {
+            if (item.group.ToUpper() == (searchGroup.ToUpper()))
+            {
+                if (albumImageVideoList.Count <= 1)
+                {
+                    if (item.group.ToUpper() == (searchGroup))
+
+                    {
+                        searchAlbumLisFiltered.Add(item);
+                        Debug.Log("specific name, specific album");
+                    }
+                }
+            }
+        }
     }
 
     //public void GalleryOpen()
@@ -91,5 +126,15 @@ public class AppManager : MonoBehaviour
     public void LoadScene()
     {
         loadingScreen.GetComponent<LevelLoader>().LoadScene("ARScene");
+    }
+    public void UnLoadSceneAdditive()
+    {
+        //var prefab = Instantiate(loadingScreen.GetComponent<levelLoader>().CHOOSEGROUPALBUMSMENU);
+        //loadingScreen.GetComponent<levelLoader>().ARCANVASspawn = prefab;
+        loadingScreen.GetComponent<LevelLoader>().LoadSceneAdditive("MainScene");
+    }
+    public void UnLoadScene()
+    {
+        loadingScreen.GetComponent<LevelLoader>().LoadScene("MainScene");
     }
 }

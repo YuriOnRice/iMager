@@ -13,6 +13,12 @@ public class ButtonScript : MonoBehaviour
 {
     public GameObject AppManager;
 
+
+    public void Start()
+    {
+        AppManager = GameObject.Find("AppManager");
+    }
+
     public void OpenScene(string level)
     {
         SceneManager.LoadScene(level);
@@ -39,6 +45,7 @@ public class ButtonScript : MonoBehaviour
     public void DisableAR()
     {
         AppManager.GetComponent<AppManager>().ARBool = false;
+        //AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
         //AppManager.GetComponent<AppManager>().destroyTrackables = true;
         //AppManager.GetComponent<AppManager>().imageTargetName = null;
     }
@@ -50,7 +57,7 @@ public class ButtonScript : MonoBehaviour
 
     public void BecomeVideo()
     {
-        PickVideo();
+        PickVideo(512);
     }
 
 
@@ -73,24 +80,67 @@ public class ButtonScript : MonoBehaviour
 
                 UnityEngine.UI.Image image = this.gameObject.GetComponent<UnityEngine.UI.Image>();
 
-                image.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                this.gameObject.transform.parent.GetComponent<videoImageInfo>().image = image;
+
+                this.gameObject.transform.parent.GetComponent<videoImageInfo>().imagePath = path;
+
+                image.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), 
+                    new Vector2(0.5f, 0.5f), 100.0f);
             }
         }, "Select a PNG image", "image/png");
 
         Debug.Log("Permission result: " + permission);
     }
 
-    public void PickVideo()
+    public void PickVideo(int maxSize)
     {
         NativeGallery.Permission permission = NativeGallery.GetVideoFromGallery((path) =>
         {
             Debug.Log("Video path: " + path);
             if (path != null)
             {
+                Texture2D texture = NativeGallery.GetVideoThumbnail("file://" + path, maxSize);
+
+                this.gameObject.transform.parent.GetComponent<videoImageInfo>().videoPath = path;
+
+                //Handheld.PlayFullScreenMovie("file://" + path);
+
+                if (texture == null)
+                {
+                    Debug.Log("Couldn't load texture from " + path);
+                    return;
+                }
                 // Play the selected video
-                Handheld.PlayFullScreenMovie("file://" + path);
+                //Handheld.PlayFullScreenMovie("file://" + path);
+                UnityEngine.UI.Image image = this.gameObject.GetComponent<UnityEngine.UI.Image>();
+
+                UnityEngine.Video.VideoClip video = this.gameObject.GetComponent<UnityEngine.Video.VideoClip>();
+
+                UnityEngine.Video.VideoPlayer videoPlayer = this.gameObject.GetComponent<UnityEngine.Video.VideoPlayer>();
+
+                
+
+                this.gameObject.transform.parent.GetComponent<videoImageInfo>().video = video;
+               
+
+                image.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), 
+                    new Vector2(0.5f, 0.5f), 100.0f);
+
+
+                //videoPlayer.time = 0;
+                //Plays the video for one frame
+                //videoPlayer.Play();
+                //Sets the frame to display on the RawImage
+                //image.sprite = videoPlayer.texture;
+                //Pauses the video after one frame so that the first frame
+                //of the video is displayed during idle
+                //videoPlayer.Pause();
+
+
+
             }
         }, "Select a video");
+
 
         Debug.Log("Permission result: " + permission);
     }

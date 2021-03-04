@@ -70,11 +70,17 @@ public class LevelLoader : MonoBehaviour
         if (operation.isDone)
         {
             loadingScreen.SetActive(false);
+
+
+
             if (level == "ARScene")
             {
 
-                ARCANVASspawn = Instantiate(ARCANVAS);
-                yield return new WaitForSecondsRealtime(0.1f);
+                //ARCANVASspawn = Instantiate(ARCANVAS);
+                //yield return new WaitForSecondsRealtime(0.1f);
+
+
+
                 /*
                 if (ARCamera.GetComponent<ImageTargetBehaviourForKpop>())
                 {
