@@ -16,5 +16,5 @@ MonoBehaviour:
   album: 'Dystopia: Lose Myself'
   imageUrl: 
   image: {fileID: 0}
-  video: {fileID: 0}
+  video: {fileID: 32900000, guid: 4b71e0e72d7b8f34c81432f944a17b24, type: 3}
   videoUrl: 

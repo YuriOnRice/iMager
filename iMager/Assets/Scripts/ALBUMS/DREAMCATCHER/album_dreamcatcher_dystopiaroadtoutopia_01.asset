@@ -16,5 +16,5 @@ MonoBehaviour:
   album: 'Dystopia: Road to Utopia'
   imageUrl: 
   image: {fileID: 0}
-  video: {fileID: 0}
+  video: {fileID: 32900000, guid: 8fbba2aaf5eaee541abff58837d0e2ac, type: 3}
   videoUrl: 

@@ -10,8 +10,20 @@ using UnityEngine.Networking;
 
 public class CreateImageTargets : MonoBehaviour
 {
-    public GameObject Holder;
-    public List<videoImageInfo> videoImageInfoList;
+    public List<AlbumImageVideos> albumContainers;
+    public List<AlbumImageVideos> existingAlbumContainers;
+    public List<GameObject> imageTargets = new List<GameObject>();
+
+    [Space(10)]
+    [Header("SEARCH ALBUM")]
+    public string searchAlbumGroup; //group
+
+    public bool createTarget = false;
+    public bool getCards = false;
+    public bool cycleCreate = false;
+    public int index = 0;//used for adding next photocard script to each photocard object to teh photoinformation container
+    public int indexAlbum = 0;
+    public int numberInAlbum = 0;
 
     void Start()
     {

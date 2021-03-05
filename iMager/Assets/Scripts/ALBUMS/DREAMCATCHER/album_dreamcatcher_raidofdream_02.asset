@@ -16,5 +16,5 @@ MonoBehaviour:
   album: Raid of Dream
   imageUrl: 
   image: {fileID: 0}
-  video: {fileID: 0}
-  videoUrl: https://imgur.com/xFDATyH
+  video: {fileID: 32900000, guid: 96b6fc10ee485f947bd2e0dc5c01ce50, type: 3}
+  videoUrl: 

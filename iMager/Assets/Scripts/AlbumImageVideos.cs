@@ -9,7 +9,5 @@ public class AlbumImageVideos : ScriptableObject
     public string group;
     public string album;
     public string imageUrl;
-    public UnityEngine.UI.Image image;
     public UnityEngine.Video.VideoClip video;
-    public string videoUrl;
 }
