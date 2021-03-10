@@ -36,18 +36,58 @@ public class ButtonScript : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(level, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
-    public void EnableAR()
+
+    public void FilterAlbums()
     {
-        AppManager.GetComponent<AppManager>().LoadSceneAdditive();
+        AppManager.GetComponent<AppManager>().FilterAlbums();
+    }
+    public void EnableAR(string SceneName)
+    {
+        AppManager.GetComponent<AppManager>().level = SceneName;
+        LoadSceneAdditive(SceneName);
+        //AppManager.GetComponent<AppManager>().LoadSceneAdditive();
         AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
+
+
+        //AppManager.GetComponent<AppManager>().level = ImageTargetName;
+        //AppManager.GetComponent<AppManager>().LoadSceneAdditive(ImageTargetName);
+        ////AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
+
+        ////AppManager.GetComponent<AppManager>().loadingScreen.
+        ////    GetComponent<LevelLoader>().
+        ////    LoadSceneAdditive(ImageTargetName);
+        ////AppManager.GetComponent<AppManager>().LoadSceneAdditive();
+        //AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
     }
 
     public void DisableAR()
     {
         AppManager.GetComponent<AppManager>().ARBool = false;
+        AppManager.GetComponent<AppManager>().level = "MainScene";
         //AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
         //AppManager.GetComponent<AppManager>().destroyTrackables = true;
         //AppManager.GetComponent<AppManager>().imageTargetName = null;
+    }
+
+    public void OpenWindow(GameObject WindowName)
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainScene"));
+        GameObject go = Instantiate(WindowName) as GameObject;
+        go.name = WindowName.name;
+
+        Destroy(transform.root.gameObject);
+        //AppManager.GetComponent<AppManager>().ARBool = false;
+        //Debug.Log(transform.parent.gameObject.name);
+    }
+
+    public void CloseWindow()
+    {
+        Destroy(transform.root.gameObject);
+    }
+
+    public void AlbumNameToManager()
+    {
+        AppManager.GetComponent<AppManager>().searchGroup = this.gameObject.name;
     }
 
     public void BecomeImage()

@@ -6,6 +6,7 @@ using TMPro;
 
 public class LevelLoader : MonoBehaviour
 {
+    public string loadLevel;
     public GameObject ARCANVAS;
     public GameObject ARCANVASspawn;
     public GameObject ARCamera;
@@ -14,6 +15,8 @@ public class LevelLoader : MonoBehaviour
     public Slider slider;
     public TextMeshProUGUI sliderText;
     public GameObject appManager;
+
+    
 
     public void LoadSceneAdditive(string level)
     {
@@ -45,12 +48,6 @@ public class LevelLoader : MonoBehaviour
         if (operation.isDone)
         {
             loadingScreen.SetActive(false);
-            if (level != "CREATEIMAGETARGET")
-            {
-                appManager.GetComponent<AppManager>().mainCamera.SetActive(true);
-                appManager.GetComponent<AppManager>().ARBool = false;
-
-            }
         }
     }
     IEnumerator LoadAsynchronously(string level)
@@ -69,42 +66,41 @@ public class LevelLoader : MonoBehaviour
 
         if (operation.isDone)
         {
+            Debug.Log("lol");
             loadingScreen.SetActive(false);
-
-
-
-            if (level == "ARScene")
+            //if (level == "ARScene")
             {
+                ARCANVASspawn = Instantiate(ARCANVAS);
 
-                //ARCANVASspawn = Instantiate(ARCANVAS);
-                //yield return new WaitForSecondsRealtime(0.1f);
-
-
-
-                /*
-                if (ARCamera.GetComponent<ImageTargetBehaviourForKpop>())
+                
+                yield return new WaitForSecondsRealtime(0.1f);
+                if (ARCamera.GetComponent<CreateImageTargets>())
                 {
                     appManager.GetComponent<AppManager>().mainCamera.SetActive(false);
                     appManager.GetComponent<AppManager>().ARBool = true;
                     yield return new WaitForSecondsRealtime(0.1f);
                     ARCANVASspawn.gameObject.transform.GetChild(5).gameObject.AddComponent<UnityEngine.UI.Image>();
-                    ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().InitStart();
+                    //ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().InitStart();
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCamera = ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().ARCamera;
+                    //ARCamera = ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().ARCamera;
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCamera.GetComponent<ImageTargetBehaviourForKpop>().FilteredCardsNew();
+                    ARCamera.GetComponent<CreateImageTargets>().filteredAlbumContainers =
+                        appManager.GetComponent<AppManager>().searchAlbumListFiltered;
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCamera.GetComponent<ImageTargetBehaviourForKpop>().InitStart();
+                    ARCamera.GetComponent<CreateImageTargets>().InitStart();
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCamera.GetComponent<ImageTargetBehaviourForKpop>().GetLoadingBar();
-                    ARCamera.GetComponent<ImageTargetBehaviourForKpop>().LoadingBarText.GetComponent<TextMeshProUGUI>().text = "Cards: " + ARCamera.GetComponent<ImageTargetBehaviourForKpop>().index + " / " + ARCamera.GetComponent<ImageTargetBehaviourForKpop>().maxAmount;
+                    ARCamera.GetComponent<CreateImageTargets>().GetLoadingBar();
+                    ARCamera.GetComponent<CreateImageTargets>().LoadingBarText.GetComponent<TextMeshProUGUI>().text 
+                = "Albums: " + ARCamera.GetComponent<CreateImageTargets>().index + " / " + 
+                ARCamera.GetComponent<CreateImageTargets>().maxAmount;
 
                 }
-                else if (!ARCamera.GetComponent<ImageTargetBehaviourForKpop>())
+                else if (!ARCamera.GetComponent<CreateImageTargets>())
                 {
                     ARCANVASspawn.gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 }
-                */
+                
+                
 
             }
         }

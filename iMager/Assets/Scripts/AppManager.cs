@@ -15,17 +15,18 @@ using NativeGalleryNamespace;
 public class AppManager : MonoBehaviour
 {
     public GameObject mainCamera;
-    public GameObject MAINMENU;
+    //public GameObject MAINMENU;
     //public GameObject arCamera;
     public bool ARBool = false;
     public GameObject loadingScreen;
-    public GameObject gallery;
+    //public GameObject gallery;
+    public string level;
 
 
     public bool filterAlbumsBool = false;
     public string searchGroup; //filter by this  group name
     public List<AlbumImageVideos> albumImageVideoList; //entire album list
-    public List<AlbumImageVideos> searchAlbumLisFiltered; //filtered album list
+    public List<AlbumImageVideos> searchAlbumListFiltered; //filtered album list
 
     //public GameObject VideoImage;
     //public List<videoImageInfo> videoImageInfoList;
@@ -36,13 +37,13 @@ public class AppManager : MonoBehaviour
         if (ARBool == true)
         {
             mainCamera.SetActive(false);
-            MAINMENU.SetActive(false);
+            //MAINMENU.SetActive(false);
             //arCamera.SetActive(true);
         }
         else if (ARBool == false)
         {
             mainCamera.SetActive(true);
-            MAINMENU.SetActive(true);
+            //MAINMENU.SetActive(true);
             //arCamera.SetActive(false);
         }
         if (filterAlbumsBool == true)
@@ -50,6 +51,8 @@ public class AppManager : MonoBehaviour
             FilterAlbums();
         }
     }
+
+
 
     public void Start()
     {
@@ -61,18 +64,17 @@ public class AppManager : MonoBehaviour
     {
         foreach (var item in albumImageVideoList)
         {
-            if (item.group.ToUpper() == (searchGroup.ToUpper()))
+            if (item.group.ToUpper() == (searchGroup.ToUpper()) && item.video != null)
             {
-                if (albumImageVideoList.Count <= 1)
-                {
-                    if (item.group.ToUpper() == (searchGroup))
+              searchAlbumListFiltered.Add(item);
+                searchAlbumListFiltered = new List<AlbumImageVideos>(searchAlbumListFiltered).Distinct().ToList();
 
-                    {
-                        searchAlbumLisFiltered.Add(item);
-                        Debug.Log("specific name, specific album");
-                    }
-                }
             }
+            else if (item.group.ToUpper() != (searchGroup.ToUpper()))
+            {
+                searchAlbumListFiltered.Remove(item);
+            }
+
         }
     }
 
@@ -119,13 +121,12 @@ public class AppManager : MonoBehaviour
 
     public void LoadSceneAdditive()
     {
-        //var prefab = Instantiate(loadingScreen.GetComponent<levelLoader>().CHOOSEGROUPALBUMSMENU);
-        //loadingScreen.GetComponent<levelLoader>().ARCANVASspawn = prefab;
-        loadingScreen.GetComponent<LevelLoader>().LoadSceneAdditive("ARScene");
+        loadingScreen.GetComponent<LevelLoader>().LoadSceneAdditive(level);
+        Debug.Log("rreee");
     }
     public void LoadScene()
     {
-        loadingScreen.GetComponent<LevelLoader>().LoadScene("ARScene");
+        loadingScreen.GetComponent<LevelLoader>().LoadScene(level);
     }
     public void UnLoadSceneAdditive()
     {
