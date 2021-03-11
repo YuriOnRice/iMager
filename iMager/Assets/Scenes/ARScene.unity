@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1979417516
+--- !u!1 &2014832799
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,12 +131,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1979417521}
-  - component: {fileID: 1979417520}
-  - component: {fileID: 1979417519}
-  - component: {fileID: 1979417518}
-  - component: {fileID: 1979417517}
-  - component: {fileID: 1979417522}
+  - component: {fileID: 2014832805}
+  - component: {fileID: 2014832804}
+  - component: {fileID: 2014832803}
+  - component: {fileID: 2014832802}
+  - component: {fileID: 2014832800}
+  - component: {fileID: 2014832801}
   m_Layer: 0
   m_Name: ARCamera
   m_TagString: MainCamera
@@ -144,25 +144,58 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1979417517
+--- !u!114 &2014832800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
+  m_GameObject: {fileID: 2014832799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96502ee2b8d8f5c4caf98af3d953c981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageTargets: []
+  currentAlbumContainer: {fileID: 0}
+  existingAlbumContainers: []
+  filteredAlbumContainers: []
+  cycleCreate: 0
+  getCards: 0
+  getCurrentStream: 0
+  currentStreams: []
+  createTarget: 0
+  currentStream: 
+  streamList: []
+  index: 0
+  indexAlbum: 0
+  numberInAlbum: 0
+  maxAmount: 0
+  Holder: {fileID: 5855788214382823913, guid: 39f9328ea44e99c4cac900d335c7f0ab, type: 3}
+  AppManager: {fileID: 0}
+  LoadingBar: {fileID: 0}
+  LoadingBarText: {fileID: 0}
+  textingbool: 0
+  videoCamera: 0
+--- !u!114 &2014832801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014832799}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c47f92041efbb4b429a4eafca855ebe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1979417518
+--- !u!114 &2014832802
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
+  m_GameObject: {fileID: 2014832799}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1826476478, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
@@ -170,21 +203,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mWorldCenterMode: 2
   mWorldCenter: {fileID: 0}
---- !u!81 &1979417519
+--- !u!81 &2014832803
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
+  m_GameObject: {fileID: 2014832799}
   m_Enabled: 1
---- !u!20 &1979417520
+--- !u!20 &2014832804
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
+  m_GameObject: {fileID: 2014832799}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -221,13 +254,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &1979417521
+--- !u!4 &2014832805
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
+  m_GameObject: {fileID: 2014832799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -235,33 +268,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1979417522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979417516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96502ee2b8d8f5c4caf98af3d953c981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageTargets: []
-  currentAlbumContainer: {fileID: 0}
-  filteredAlbumContainers: []
-  currentStream: 
-  streamList: []
-  createTarget: 0
-  getCards: 0
-  cycleCreate: 0
-  index: 0
-  indexAlbum: 0
-  numberInAlbum: 0
-  maxAmount: 0
-  Holder: {fileID: 5855788214382823913, guid: 39f9328ea44e99c4cac900d335c7f0ab, type: 3}
-  AppManager: {fileID: 0}
-  LoadingBar: {fileID: 0}
-  LoadingBarText: {fileID: 0}
-  textingbool: 0
-  videoCamera: 0

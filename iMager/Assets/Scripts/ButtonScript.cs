@@ -6,12 +6,15 @@ using UnityEngine.SceneManagement;
 using Vuforia;
 using System.Linq;
 using TMPro;
-using NativeGalleryNamespace;
 
 
 public class ButtonScript : MonoBehaviour
 {
     public GameObject AppManager;
+    public bool addAlbum = false;
+    public bool addGroup = false;
+    public GameObject openWindowprefab;
+    public GameObject arCamera;
 
 
     public void Start()
@@ -37,6 +40,29 @@ public class ButtonScript : MonoBehaviour
         SceneManager.UnloadSceneAsync(level, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
     }
 
+    public void DestroyTrackables()
+    {
+        StartCoroutine((DestroyTrackablesInScene()));
+    }
+
+    public IEnumerator DestroyTrackablesInScene()
+    {
+        arCamera = GameObject.Find("ARCamera");
+        arCamera.GetComponent<VuforiaBehaviour>().enabled = false;
+        yield return new WaitForSecondsRealtime(0.2f);
+        DisableAR();
+        yield return new WaitForSecondsRealtime(0.2f);
+        Scene[] scenes = SceneManager.GetAllScenes();
+        string level = scenes[1].name;
+        AppManager.GetComponent<AppManager>().searchAlbumListFiltered.Clear();
+        AppManager.GetComponent<AppManager>().searchGroup = null;
+        arCamera.GetComponent<CreateImageTargets>().filteredAlbumContainers.Clear();
+        arCamera.GetComponent<CreateImageTargets>().streamList.Clear();
+        OpenWindow(openWindowprefab);
+        UnLoadSceneAdditive(level);
+        //yield return new WaitForSecondsRealtime(4.5f);
+    }
+
     public void FilterAlbums()
     {
         AppManager.GetComponent<AppManager>().FilterAlbums();
@@ -44,8 +70,8 @@ public class ButtonScript : MonoBehaviour
     public void EnableAR(string SceneName)
     {
         AppManager.GetComponent<AppManager>().level = SceneName;
-        LoadSceneAdditive(SceneName);
-        //AppManager.GetComponent<AppManager>().LoadSceneAdditive();
+        //LoadSceneAdditive(SceneName);
+        AppManager.GetComponent<AppManager>().LoadSceneAdditive();
         AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
 
 
@@ -64,6 +90,7 @@ public class ButtonScript : MonoBehaviour
     {
         AppManager.GetComponent<AppManager>().ARBool = false;
         AppManager.GetComponent<AppManager>().level = "MainScene";
+        arCamera.GetComponent<CreateImageTargets>().DestroyDataSets();
         //AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
         //AppManager.GetComponent<AppManager>().destroyTrackables = true;
         //AppManager.GetComponent<AppManager>().imageTargetName = null;
@@ -90,122 +117,5 @@ public class ButtonScript : MonoBehaviour
         AppManager.GetComponent<AppManager>().searchGroup = this.gameObject.name;
     }
 
-    public void BecomeImage()
-    {
-        PickImage(512);
-    }
 
-    public void BecomeVideo()
-    {
-        PickVideo(512);
-    }
-
-
-    public void PickImage(int maxSize)
-    {
-        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
-        {
-            Debug.Log("Image path: " + path);
-            if (path != null)
-            {
-                // Create Texture from selected image
-                Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize);
-                if (texture == null)
-                {
-                    Debug.Log("Couldn't load texture from " + path);
-                    return;
-                }
-
-                // Assign texture to a temporary quad and destroy it after 5 seconds
-
-                UnityEngine.UI.Image image = this.gameObject.GetComponent<UnityEngine.UI.Image>();
-
-                this.gameObject.transform.parent.GetComponent<videoImageInfo>().image = image;
-
-                this.gameObject.transform.parent.GetComponent<videoImageInfo>().imagePath = path;
-
-                image.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), 
-                    new Vector2(0.5f, 0.5f), 100.0f);
-            }
-        }, "Select a PNG image", "image/png");
-
-        Debug.Log("Permission result: " + permission);
-    }
-
-    public void PickVideo(int maxSize)
-    {
-        NativeGallery.Permission permission = NativeGallery.GetVideoFromGallery((path) =>
-        {
-            Debug.Log("Video path: " + path);
-            if (path != null)
-            {
-                Texture2D texture = NativeGallery.GetVideoThumbnail("file://" + path, maxSize);
-
-                this.gameObject.transform.parent.GetComponent<videoImageInfo>().videoPath = path;
-
-                //Handheld.PlayFullScreenMovie("file://" + path);
-
-                if (texture == null)
-                {
-                    Debug.Log("Couldn't load texture from " + path);
-                    return;
-                }
-                // Play the selected video
-                //Handheld.PlayFullScreenMovie("file://" + path);
-                UnityEngine.UI.Image image = this.gameObject.GetComponent<UnityEngine.UI.Image>();
-
-                UnityEngine.Video.VideoClip video = this.gameObject.GetComponent<UnityEngine.Video.VideoClip>();
-
-                UnityEngine.Video.VideoPlayer videoPlayer = this.gameObject.GetComponent<UnityEngine.Video.VideoPlayer>();
-
-                
-
-                this.gameObject.transform.parent.GetComponent<videoImageInfo>().video = video;
-               
-
-                image.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), 
-                    new Vector2(0.5f, 0.5f), 100.0f);
-
-
-                //videoPlayer.time = 0;
-                //Plays the video for one frame
-                //videoPlayer.Play();
-                //Sets the frame to display on the RawImage
-                //image.sprite = videoPlayer.texture;
-                //Pauses the video after one frame so that the first frame
-                //of the video is displayed during idle
-                //videoPlayer.Pause();
-
-
-
-            }
-        }, "Select a video");
-
-
-        Debug.Log("Permission result: " + permission);
-    }
-
-    // Example code doesn't use this function but it is here for reference
-    public void PickImageOrVideo()
-    {
-        if (NativeGallery.CanSelectMultipleMediaTypesFromGallery())
-        {
-            NativeGallery.Permission permission = NativeGallery.GetMixedMediaFromGallery((path) =>
-            {
-                Debug.Log("Media path: " + path);
-                if (path != null)
-                {
-                    // Determine if user has picked an image, video or neither of these
-                    switch (NativeGallery.GetMediaTypeOfFile(path))
-                    {
-                        case NativeGallery.MediaType.Image: Debug.Log("Picked image"); break;
-                        case NativeGallery.MediaType.Video: Debug.Log("Picked video"); break;
-                        default: Debug.Log("Probably picked something else"); break;
-                    }
-                }
-            }, NativeGallery.MediaType.Image | NativeGallery.MediaType.Video, "Select an image or video");
-
-            Debug.Log("Permission result: " + permission);
-        }
-    }
 }

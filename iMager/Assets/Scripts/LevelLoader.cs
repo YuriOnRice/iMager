@@ -10,6 +10,7 @@ public class LevelLoader : MonoBehaviour
     public GameObject ARCANVAS;
     public GameObject ARCANVASspawn;
     public GameObject ARCamera;
+    public GameObject ARCameraSpawn;
 
     public GameObject loadingScreen;
     public Slider slider;
@@ -72,33 +73,49 @@ public class LevelLoader : MonoBehaviour
             {
                 ARCANVASspawn = Instantiate(ARCANVAS);
 
-                
+                //ARCamera = Instantiate(ARCameraSpawn);
+
+
                 yield return new WaitForSecondsRealtime(0.1f);
-                if (ARCamera.GetComponent<CreateImageTargets>())
+
+                
+                //if (ARCamera.GetComponent<CreateImageTargets>())
                 {
+
                     appManager.GetComponent<AppManager>().mainCamera.SetActive(false);
                     appManager.GetComponent<AppManager>().ARBool = true;
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCANVASspawn.gameObject.transform.GetChild(5).gameObject.AddComponent<UnityEngine.UI.Image>();
-                    //ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().InitStart();
-                    yield return new WaitForSecondsRealtime(0.1f);
-                    //ARCamera = ARCANVASspawn.gameObject.transform.GetChild(0).gameObject.GetComponent<scanAndCollect>().ARCamera;
+                    GameObject[] goArray = SceneManager.GetSceneByName("ARScene").GetRootGameObjects();
+                    if (goArray.Length > 0)
+                    {
+                        GameObject rootGo = goArray[0];
+
+                        ARCamera = rootGo;
+                    }
                     yield return new WaitForSecondsRealtime(0.1f);
                     ARCamera.GetComponent<CreateImageTargets>().filteredAlbumContainers =
                         appManager.GetComponent<AppManager>().searchAlbumListFiltered;
                     yield return new WaitForSecondsRealtime(0.1f);
-                    ARCamera.GetComponent<CreateImageTargets>().InitStart();
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName("ARScene"));
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    ARCamera = GameObject.Find("ARCamera");
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    ARCamera.GetComponent<CreateImageTargets>().StartMe();
                     yield return new WaitForSecondsRealtime(0.1f);
                     ARCamera.GetComponent<CreateImageTargets>().GetLoadingBar();
                     ARCamera.GetComponent<CreateImageTargets>().LoadingBarText.GetComponent<TextMeshProUGUI>().text 
                 = "Albums: " + ARCamera.GetComponent<CreateImageTargets>().index + " / " + 
                 ARCamera.GetComponent<CreateImageTargets>().maxAmount;
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    //ARCamera.GetComponent<CreateImageTargets>().cycleCreate = true;
 
                 }
-                else if (!ARCamera.GetComponent<CreateImageTargets>())
-                {
-                    ARCANVASspawn.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-                }
+                //else if (!ARCamera.GetComponent<CreateImageTargets>())
+                //{
+                //    ARCANVASspawn.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //}
+
+                
                 
                 
 

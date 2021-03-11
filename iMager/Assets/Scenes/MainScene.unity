@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 519420028}
   ARBool: 0
-  loadingScreen: {fileID: 519270141}
+  loadingScreen: {fileID: 1771556922}
   level: 
   filterAlbumsBool: 0
   searchGroup: 
@@ -898,9 +898,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 269bd65b22a0bb8419dc4e629fb1cfe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadLevel: 
   ARCANVAS: {fileID: 4153978507204318361, guid: 8a913d411537fbd43a3926e7ad284f8e, type: 3}
   ARCANVASspawn: {fileID: 0}
   ARCamera: {fileID: 0}
+  ARCameraSpawn: {fileID: 8600336830414802514, guid: 0cabacb39c52e9d4ab0d99d5f3444e53, type: 3}
   loadingScreen: {fileID: 519270141}
   slider: {fileID: 1958809340}
   sliderText: {fileID: 1560131930}
@@ -984,7 +986,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 415493281}
   m_HandleRect: {fileID: 0}

@@ -8,7 +8,6 @@ using UnityEditor;
 using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
-using NativeGalleryNamespace;
 
 
 [ExecuteAlways]

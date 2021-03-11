@@ -19,7 +19,7 @@ public class CustomTrackableBehaviour : MonoBehaviour
     /// - Also consider the target if's outside of the view, but the environment is tracked (EXTENDED_TRACKED)
     /// - Even consider the target if tracking is in LIMITED mode, e.g. the environment is just 3dof tracked.
     /// </summary>
-    public TrackingStatusFilter StatusFilter = TrackingStatusFilter.Tracked_ExtendedTracked_Limited;
+    public TrackingStatusFilter StatusFilter = TrackingStatusFilter.Tracked;
     public UnityEvent OnTargetFound;
     public UnityEvent OnTargetLost;
 
@@ -66,15 +66,19 @@ public class CustomTrackableBehaviour : MonoBehaviour
             ShouldBeRendered(m_NewStatus))
         {
             OnTrackingFound();
+            if (GetComponent<AlbumContainer>())
+            {
+                GetComponent<playVideo>().isPlaying = true;
+            }
         }
         else if (ShouldBeRendered(m_PreviousStatus) &&
                  !ShouldBeRendered(m_NewStatus))
         {
             OnTrackingLost();
-
-            
-                //GetComponent<playVideo>().StopMovie();
-            
+            if (GetComponent<AlbumContainer>())
+            {
+                GetComponent<playVideo>().isPlaying = false;
+            }
         }
         else
         {

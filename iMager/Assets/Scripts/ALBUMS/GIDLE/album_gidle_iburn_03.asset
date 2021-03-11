@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   group: (G)I-DLE
   album: I Burn
-  imageUrl: 
-  image: {fileID: 0}
+  imageUrl: Vuforia/GIDLE/album_gidle_iburn_03.jpg
   video: {fileID: 32900000, guid: 0dc05d8d3c804444d8b520fb891b84ba, type: 3}
-  videoUrl: 

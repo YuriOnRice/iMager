@@ -19,7 +19,7 @@ public class EditorScript
             // + p.group.ToLower().Replace(" ", "") + "_"+p.album.Replace(" ", "").Replace(":", "") + ".jpg";
 
 
-            p.imageUrl = "Assets/StreamingAssets/Vuforia/" 
+            p.imageUrl = "Vuforia/" 
                 + p.group.ToUpper().Replace(" ", "") + "/"
             + p.name
             + ".jpg";
