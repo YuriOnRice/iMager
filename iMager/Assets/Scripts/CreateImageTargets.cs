@@ -101,7 +101,7 @@ public class CreateImageTargets : MonoBehaviour
         var objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
         var dataset = objectTracker.GetDataSets();
         //Enumerable<Trackable> trackables = objectTracker.GetTrackables();
-        objectTracker.DestroyAllDataSets(false);
+        objectTracker.DestroyAllDataSets(true);
 
         foreach (var item in imageTargets)
         {
@@ -209,7 +209,7 @@ public class CreateImageTargets : MonoBehaviour
             trackableBehaviour.gameObject.AddComponent<CustomTrackableBehaviour>();
             trackableBehaviour.gameObject.AddComponent<TurnOffBehaviour>();
             trackableBehaviour.gameObject.AddComponent<AlbumContainer>();
-            trackableBehaviour.gameObject.GetComponent<CustomTrackableBehaviour>().enabled = false;
+            trackableBehaviour.gameObject.GetComponent<CustomTrackableBehaviour>().enabled = true;
             trackableBehaviour.gameObject.AddComponent<playVideo>();
             imageTargets.Add(trackableBehaviour.gameObject);
 

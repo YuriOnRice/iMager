@@ -88,9 +88,9 @@ public class ButtonScript : MonoBehaviour
 
     public void DisableAR()
     {
+        arCamera.GetComponent<CreateImageTargets>().DestroyDataSets();
         AppManager.GetComponent<AppManager>().ARBool = false;
         AppManager.GetComponent<AppManager>().level = "MainScene";
-        arCamera.GetComponent<CreateImageTargets>().DestroyDataSets();
         //AppManager.GetComponent<AppManager>().loadingScreen.SetActive(true);
         //AppManager.GetComponent<AppManager>().destroyTrackables = true;
         //AppManager.GetComponent<AppManager>().imageTargetName = null;
